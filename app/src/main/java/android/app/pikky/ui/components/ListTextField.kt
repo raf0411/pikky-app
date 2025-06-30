@@ -1,45 +1,64 @@
 package android.app.pikky.ui.components
 
 import android.app.pikky.ui.theme.Color
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun ListTextField(
-    modifier: Modifier = Modifier,
-    value: TextFieldValue,
-    onValueChange: () -> Unit,
-    label: String,
-    placeholder: String
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = { onValueChange },
-        label = { Text(text = label) },
-        placeholder = { Text(placeholder) },
-        maxLines = 10,
+fun ListTextField() {
+    var text by rememberSaveable { mutableStateOf("") }
+
+    BasicTextField(
+        value = text,
+        onValueChange = { text = it },
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = Color.Gray80,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .background(Color.Gray50.copy(alpha = 0.7f), RoundedCornerShape(8.dp))
+            .height(130.dp),
         singleLine = false,
-        modifier = modifier.height(200.dp),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Gray50.copy(alpha = 0.8f),
-            unfocusedContainerColor = Color.Gray50,
-            focusedPlaceholderColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
-            unfocusedPlaceholderColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.7f),
-            focusedIndicatorColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-            unfocusedIndicatorColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-        ),
-        shape = RoundedCornerShape(4.dp)
+        maxLines = 10,
+        textStyle = TextStyle(color = Color.White.copy(alpha = .7f), fontSize = 16.sp),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    if (text.isEmpty()) {
+                        Text(
+                            text = "Input your list here... ",
+                            style = TextStyle(color = Color.White.copy(alpha = .7f), fontSize = 16.sp, fontFamily = FontFamily.Monospace)
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        }
     )
 }
 
@@ -49,12 +68,6 @@ fun ListTextFieldPreview() {
     Column (
         modifier = Modifier.fillMaxSize()
     ) {
-        ListTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = TextFieldValue(""),
-            onValueChange = {},
-            label = "Input your list here...",
-            placeholder = "Item 1, Item 2, Item 3"
-        )
+        ListTextField()
     }
 }

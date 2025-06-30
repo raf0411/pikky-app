@@ -22,5 +22,7 @@ object Color {
 
     val Red50 = Color(0xFFFF3C00)
 
+    val White = Color(0xFFFFFFFF)
+
     val primaryTextColor = Color(0xFFFFFFFF)
 }
