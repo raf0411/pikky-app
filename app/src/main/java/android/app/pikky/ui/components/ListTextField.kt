@@ -1,5 +1,8 @@
 package android.app.pikky.ui.components
 
+import android.R.attr.maxLines
+import android.R.attr.singleLine
+import android.R.attr.textStyle
 import android.app.pikky.ui.theme.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,12 +26,12 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ListTextField(
-    value: String,
+    text: String,
     onValueChange: (String) -> Unit
 ) {
     BasicTextField(
-        value = value,
-        onValueChange = { onValueChange },
+        value = text,
+        onValueChange = onValueChange,
         modifier = Modifier
             .fillMaxWidth()
             .border(
@@ -40,13 +43,13 @@ fun ListTextField(
             .height(130.dp),
         singleLine = false,
         maxLines = 10,
-        textStyle = TextStyle(color = Color.White.copy(alpha = .7f), fontSize = 16.sp),
+        textStyle = TextStyle(color = Color.White.copy(alpha = .7f), fontSize = 16.sp, fontFamily = FontFamily.Monospace),
         decorationBox = { innerTextField ->
             Row(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Box(modifier = Modifier.weight(1f)) {
-                    if (value.isEmpty()) {
+                    if (text.isEmpty()) {
                         Text(
                             text = "Input your list here... ",
                             style = TextStyle(color = Color.White.copy(alpha = .7f), fontSize = 16.sp, fontFamily = FontFamily.Monospace)
@@ -66,7 +69,7 @@ fun ListTextFieldPreview() {
         modifier = Modifier.fillMaxSize()
     ) {
         ListTextField(
-            value = "",
+            text = "",
             onValueChange = {}
         )
     }

@@ -28,6 +28,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.io.File
@@ -44,6 +46,7 @@ import java.io.File
 fun HomeScreen(
     listViewModel: ListViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     var listFieldValue by rememberSaveable { mutableStateOf("") }
 
@@ -72,7 +75,7 @@ fun HomeScreen(
                 Spacer(Modifier.height(16.dp))
 
                 ListTextField(
-                    value = listFieldValue,
+                    text = listFieldValue,
                     onValueChange = { listFieldValue = it }
                 )
 
@@ -99,17 +102,14 @@ fun HomeScreen(
                         onFileUploadClick = {}
                     )
 
-                    Spacer(Modifier.height(24.dp))
-
                     Text(
                         modifier = Modifier.padding(vertical = 24.dp),
                         color = Color.Red50,
                         text = "File must be .json, .txt, or .csv format.",
                         textAlign = TextAlign.Center,
+                        lineHeight = 2.em,
                         fontFamily = FontFamily.Monospace
                     )
-
-                    Spacer(Modifier.height(24.dp))
 
                     // Randomize Button
                     CustomButton(
@@ -118,7 +118,15 @@ fun HomeScreen(
                             .padding(horizontal = 16.dp)
                             .height(56.dp),
                         label = "RANDOMIZE",
-                        onClick = { listViewModel.addList(listFieldValue) }
+                        onClick = {
+                            val isSuccess = listViewModel.addList(listFieldValue)
+
+                            if (isSuccess) {
+                                listViewModel.randomizeList(context)
+                            } else {
+                                // Handle error case, e.g., show a dialog or toast
+                            }
+                        }
                     )
 
                     Spacer(Modifier.height(24.dp))

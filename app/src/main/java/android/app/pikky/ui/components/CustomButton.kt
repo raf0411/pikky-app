@@ -24,7 +24,7 @@ fun CustomButton(
 ) {
     Button(
         modifier = modifier,
-        onClick = { onClick },
+        onClick = onClick,
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Gray80,
