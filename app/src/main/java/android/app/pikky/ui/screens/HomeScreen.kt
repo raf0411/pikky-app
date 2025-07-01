@@ -1,5 +1,7 @@
 package android.app.pikky.ui.screens
 
+import android.app.pikky.R
+import android.app.pikky.ui.components.CustomButton
 import android.app.pikky.ui.components.FileUploadButton
 import android.app.pikky.ui.components.ListTextField
 import android.app.pikky.ui.components.TopBar
@@ -22,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -66,7 +69,7 @@ fun HomeScreen() {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "or",
-                    fontFamily = CustomFontFamily,
+                    fontFamily = FontFamily(Font(R.font.poppins_bold)),
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
@@ -75,12 +78,35 @@ fun HomeScreen() {
 
                 Spacer(Modifier.height(24.dp))
 
-                Box(
+                Column (
                     modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
                     FileUploadButton(
                         onFileUploadClick = {}
+                    )
+
+                    Spacer(Modifier.height(24.dp))
+
+                    CustomButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .height(56.dp),
+                        label = "RANDOMIZE",
+                        onClick = {}
+                    )
+
+                    Spacer(Modifier.height(24.dp))
+
+                    CustomButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .height(56.dp),
+                        label = "CLEAR",
+                        onClick = {}
                     )
                 }
             }

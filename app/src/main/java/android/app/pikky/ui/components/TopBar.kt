@@ -64,5 +64,5 @@ fun TopBar(
 @Preview(showBackground = true)
 @Composable
 fun TopBarPreview() {
-    TopBar( {} )
+    TopBar({})
 }

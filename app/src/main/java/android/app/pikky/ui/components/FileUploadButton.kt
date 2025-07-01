@@ -1,5 +1,6 @@
 package android.app.pikky.ui.components
 
+import android.app.pikky.R
 import android.app.pikky.ui.theme.Color
 import android.app.pikky.ui.theme.CustomFontFamily
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -75,7 +78,7 @@ fun FileUploadButton(
             Text(
                 text = buttonText,
                 fontSize = 20.sp,
-                fontFamily = CustomFontFamily,
+                fontFamily = FontFamily(Font(R.font.poppins_bold)),
                 fontWeight = FontWeight.ExtraBold
             )
         }
