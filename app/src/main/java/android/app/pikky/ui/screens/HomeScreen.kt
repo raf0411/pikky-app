@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,8 +38,8 @@ import java.io.File
 
 @Composable
 fun HomeScreen() {
-
     val listField by remember { mutableStateOf(TextFieldValue) }
+    val scrollState = rememberScrollState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -47,6 +49,7 @@ fun HomeScreen() {
         Column(
             modifier = Modifier
                 .padding(innerPadding)
+                .verticalScroll(scrollState)
         ) {
             Column (
                 modifier = Modifier
