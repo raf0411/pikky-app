@@ -14,10 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -26,12 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ListTextField() {
-    var text by rememberSaveable { mutableStateOf("") }
-
+fun ListTextField(
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     BasicTextField(
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = { onValueChange },
         modifier = Modifier
             .fillMaxWidth()
             .border(
@@ -49,7 +46,7 @@ fun ListTextField() {
                 modifier = Modifier.padding(16.dp)
             ) {
                 Box(modifier = Modifier.weight(1f)) {
-                    if (text.isEmpty()) {
+                    if (value.isEmpty()) {
                         Text(
                             text = "Input your list here... ",
                             style = TextStyle(color = Color.White.copy(alpha = .7f), fontSize = 16.sp, fontFamily = FontFamily.Monospace)
@@ -68,6 +65,9 @@ fun ListTextFieldPreview() {
     Column (
         modifier = Modifier.fillMaxSize()
     ) {
-        ListTextField()
+        ListTextField(
+            value = "",
+            onValueChange = {}
+        )
     }
 }

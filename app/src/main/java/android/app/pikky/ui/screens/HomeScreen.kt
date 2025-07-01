@@ -7,6 +7,7 @@ import android.app.pikky.ui.components.ListTextField
 import android.app.pikky.ui.components.TopBar
 import android.app.pikky.ui.theme.Color
 import android.app.pikky.ui.theme.CustomFontFamily
+import android.app.pikky.viewModel.ListViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -34,16 +37,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import java.io.File
 
 @Composable
-fun HomeScreen() {
-    val listField by remember { mutableStateOf(TextFieldValue) }
+fun HomeScreen(
+    listViewModel: ListViewModel = viewModel()
+) {
     val scrollState = rememberScrollState()
+    var listFieldValue by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { TopBar({}) },
+        topBar = { TopBar {} },
         containerColor = Color.Gray60
     ) { innerPadding ->
         Column(
@@ -65,7 +71,10 @@ fun HomeScreen() {
 
                 Spacer(Modifier.height(16.dp))
 
-                ListTextField()
+                ListTextField(
+                    value = listFieldValue,
+                    onValueChange = { listFieldValue = it }
+                )
 
                 Spacer(Modifier.height(24.dp))
 
@@ -92,17 +101,29 @@ fun HomeScreen() {
 
                     Spacer(Modifier.height(24.dp))
 
+                    Text(
+                        modifier = Modifier.padding(vertical = 24.dp),
+                        color = Color.Red50,
+                        text = "File must be .json, .txt, or .csv format.",
+                        textAlign = TextAlign.Center,
+                        fontFamily = FontFamily.Monospace
+                    )
+
+                    Spacer(Modifier.height(24.dp))
+
+                    // Randomize Button
                     CustomButton(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .height(56.dp),
                         label = "RANDOMIZE",
-                        onClick = {}
+                        onClick = { listViewModel.addList(listFieldValue) }
                     )
 
                     Spacer(Modifier.height(24.dp))
 
+                    // Clear Button
                     CustomButton(
                         modifier = Modifier
                             .fillMaxWidth()

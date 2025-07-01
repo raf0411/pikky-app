@@ -130,7 +130,7 @@ fun PopupDialogPreview() {
                 .fillMaxWidth()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center
         ) {
             PopupDialog(
                 title = "Result",
